@@ -4,21 +4,50 @@ package org.meng.tdd.tictactoe;
  * Created by meng_ on 7/23/2017.
  */
 public class TicTacToe {
+    private static final int SIZE = 3;
     private Character[][] board = {
             {'\0', '\0', '\0'}, {'\0', '\0', '\0'}, {'\0', '\0', '\0'}
     };
 
     private Character lastPlayer = '\0';
 
-    public void play(int x, int y) {
+    public String play(int x, int y) {
         checkAxis(x);
         checkAxis(y);
+        lastPlayer = this.nextPlayer();
+        setBox(x, y, lastPlayer);
+        if (isWin(x, y)) {
+            return lastPlayer + " is the winner";
+        }
+        return "No Winner";
+    }
+
+    private void setBox(int x, int y, char lastPlayer) {
         if (board[x - 1][y - 1] != '\0') {
             throw new RuntimeException();
         } else {
-            board[x - 1][y - 1] = 'X';
+            board[x - 1][y - 1] = lastPlayer;
         }
-        lastPlayer = this.nextPlayer();
+
+    }
+
+    private boolean isWin(int x, int y) {
+        int playerTotal = lastPlayer * SIZE;
+        int diagonal1 = '\0';
+        int diagonal2 = '\0';
+        for (int idx = 0; idx < 3; idx++) {
+            diagonal1 += board[idx][idx];
+            diagonal2 += board[idx][SIZE - idx - 1];
+            if (board[0][idx] + board[1][idx] + board[2][idx] == playerTotal) {
+                return true;
+            } else if (board[idx][0] + board[idx][1] + board[idx][2] == playerTotal) {
+                return true;
+            }
+        }
+        if (diagonal1 == playerTotal || diagonal2 == playerTotal) {
+            return true;
+        }
+        return false;
     }
 
     private void checkAxis(int axis) {

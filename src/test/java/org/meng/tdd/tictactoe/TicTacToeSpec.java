@@ -50,6 +50,42 @@ public class TicTacToeSpec {
     public void testGivenLastTurnXWhenNextPlayerThenT() {
         ticTacToe.play(1, 1);
         assertThat("T should be the next player", ticTacToe.nextPlayer(), equalTo('T'));
+    }
 
+    @Test
+    public void testWhenPlayThenNoWinner() {
+        String actual = ticTacToe.play(1, 1);
+        assertThat(actual, equalTo("No Winner"));
+    }
+
+    @Test
+    public void testWhenPlayAndWholeHorizontalLineThenWinner() {
+        ticTacToe.play(1, 1);
+        ticTacToe.play(1, 2);
+        ticTacToe.play(2, 1);
+        ticTacToe.play(2, 2);
+        String actual = ticTacToe.play(3, 1);
+        assertThat(actual, equalTo("X is the winner"));
+    }
+
+    @Test
+    public void testWhenPlayAndWholeVerticalLineThenWinner() {
+        ticTacToe.play(2, 1);
+        ticTacToe.play(1, 1);
+        ticTacToe.play(3, 1);
+        ticTacToe.play(1, 2);
+        ticTacToe.play(3, 3);
+        String actualT = ticTacToe.play(1, 3);
+        assertThat(actualT, equalTo("T is the winner"));
+    }
+
+    @Test
+    public void testWhenPlayAndBottomTopDiagonalLineThenWinner() {
+        ticTacToe.play(1, 3);
+        ticTacToe.play(1, 2);
+        ticTacToe.play(2, 2);
+        ticTacToe.play(1, 1);
+        String actualX = ticTacToe.play(3, 1);
+        assertThat(actualX, equalTo("X is the winner"));
     }
 }
