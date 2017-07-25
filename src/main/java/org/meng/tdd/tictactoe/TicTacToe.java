@@ -1,5 +1,8 @@
 package org.meng.tdd.tictactoe;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 /**
  * Created by meng_ on 7/23/2017.
  */
@@ -18,8 +21,14 @@ public class TicTacToe {
         setBox(x, y, lastPlayer);
         if (isWin(x, y)) {
             return lastPlayer + " is the winner";
+        } else if (isDraw()) {
+            return "The result is draw";
         }
         return "No Winner";
+    }
+
+    private boolean isDraw() {
+        return !Arrays.stream(board).flatMap(Stream::of).anyMatch(point -> point == '\0');
     }
 
     private void setBox(int x, int y, char lastPlayer) {
