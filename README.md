@@ -44,3 +44,7 @@ public class TicTacToe {
 }
 
 ```
+
+
+Coverage Report:
+gradle clean test jacocoTestReport
